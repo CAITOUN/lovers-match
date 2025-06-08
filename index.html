@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate your love compatibility based on Chinese Zodiac and BaZi. Discover your cosmic connection with our free compatibility calculator.">
+    <meta name="keywords" content="love compatibility, Chinese zodiac, BaZi, relationship calculator, compatibility test">
+    <link rel="canonical" href="https://loversmatchs.org">
+    <meta property="og:title" content="Love Compatibility Calculator">
+    <meta property="og:description" content="Discover your cosmic connection with our free Chinese Zodiac compatibility calculator">
+    <meta property="og:url" content="https://loversmatchs.org">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    <title>Love Compatibility Calculator - loversmatchs.org</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            --apple-blue: #0071e3;
+            --apple-light-blue: #64a7ff;
+            --apple-pink: #ff375f;
+            --apple-light-pink: #ffd3dc;
+            --apple-green: #34c759;
+            --apple-light-green: #d4f8e5;
+            --apple-orange: #ff9500;
+            --apple-light-gray: #f5f5f7;
+            --apple-medium-gray: #86868b;
+            --apple-dark-gray: #1d1d1f;
+            --main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--main-font);
+            line-height: 1.5;
+            color: var(--apple-dark-gray);
+            background-color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(to right, var(--apple-pink), var(--apple-blue));
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .site-logo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .site-logo a {
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            opacity: 0.8;
+        }
+        
+        .site-logo a:hover {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        /* 主要内容样式 */
+        section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: var(--apple-light-gray);
+        }
+        
+        .intro {
+            text-align: center;
+        }
+        
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--apple-dark-gray);
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--apple-medium-gray);
+        }
+        
+        /* 计算器样式 */
+        .calculator {
+            background-color: white;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-section h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            color: var(--apple-dark-gray);
+        }
+        
+        .date-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .person {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--apple-light-gray);
+            transition: transform 0.3s;
+        }
+        
+        .person:hover {
+            transform: translateY(-5px);
+        }
+        
+        .person h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--apple-dark-gray);
+        }
+        
+        .date-picker {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        select {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            appearance: none;
+            background-color: white;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+        }
+        
+        button {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 30px;
+            background-color: var(--apple-blue);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--apple-light-blue);
+            transform: scale(1.05);
+        }
+        
+        /* 结果样式 */
+        .result-section {
+            display: none;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: var(--apple-light-gray);
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            margin-bottom: 20px;
+        }
+        
+        .result-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--apple-dark-gray);
+        }
+        
+        .compatibility-score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--apple-green) 0%, var(--apple-green) var(--score), #f0f0f0 var(--score), #f0f0f0 100%);
+            position: relative;
+        }
+        
+        .compatibility-score::before {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .score-text {
+            position: relative;
+            z-index: 1;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--apple-dark-gray);
+        }
+        
+        .compatibility-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        
+        .compatibility-item {
+            flex: 1;
+            min-width: 250px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .compatibility-item h4 {
+            margin-bottom: 10px;
+            color: var(--apple-dark-gray);
+        }
+        
+        .compatibility-item p {
+            color: var(--apple-medium-gray);
+        }
+        
+        /* 解释部分样式 */
+        .explanation {
+            padding: 40px;
+            margin-top: 40px;
+            background-color: var(--apple-light-gray);
+            border-radius: 16px;
+        }
+        
+        .explanation h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--apple-dark-gray);
+        }
+        
+        .explanation-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .zodiac-info, .bazi-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 35px;
+            border-radius: 16px;
+            background-color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        .zodiac-info h3, .bazi-info h3 {
+            margin-bottom: 25px;
+            color: var(--apple-blue);
+            font-size: 1.6rem;
+        }
+        
+        .zodiac-info h4, .bazi-info h4 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--apple-dark-gray);
+            font-size: 1.3rem;
+        }
+        
+        .zodiac-info p, .bazi-info p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.05rem;
+        }
+        
+        .zodiac-info ul, .bazi-info ul {
+            padding-left: 20px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .zodiac-info li, .bazi-info li {
+            margin-bottom: 12px;
+            padding-left: 5px;
+        }
+        
+        /* 新增的生肖网格布局 */
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .zodiac-item {
+            background-color: var(--apple-light-gray);
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .zodiac-item:hover {
+            background-color: var(--apple-light-pink);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* BaZi因素布局 */
+        .bazi-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .bazi-factor {
+            background-color: var(--apple-light-gray);
+            border-radius: 12px;
+            padding: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .bazi-factor:hover {
+            background-color: var(--apple-light-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .factor-title {
+            margin-bottom: 10px;
+            color: var(--apple-dark-gray);
+            font-size: 1.05rem;
+        }
+        
+        .factor-desc {
+            color: var(--apple-medium-gray);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--apple-medium-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 30px 0;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .intro h2 {
+                font-size: 1.6rem;
+            }
+            
+            .compatibility-score {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .compatibility-score::before {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .score-text {
+                font-size: 2rem;
+            }
+            
+            /* 解释部分的移动设备优化 */
+            .explanation {
+                padding: 25px 15px;
+            }
+            
+            .explanation h2 {
+                font-size: 1.8rem;
+                margin-bottom: 25px;
+            }
+            
+            .zodiac-info, .bazi-info {
+                padding: 20px;
+            }
+            
+            .zodiac-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            
+            .bazi-factors {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .zodiac-item, .bazi-factor {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Love Compatibility Calculator</h1>
+            <p>Based on Chinese BaZi and Zodiac Matching</p>
+            <div class="site-logo">
+                <a href="https://loversmatchs.org" title="loversmatchs.org">loversmatchs.org</a>
+            </div>
+        </header>
+        
+        <main>
+            <section class="intro">
+                <h2>Discover Your Cosmic Connection</h2>
+                <p>In traditional Chinese culture, BaZi (Eight Characters) and Zodiac compatibility are used to predict the emotional harmony between two people. By entering your birth dates, we'll analyze your zodiac compatibility, elemental balance, and provide you with a comprehensive score.</p>
+            </section>
+            
+            <section class="calculator">
+                <div class="input-section">
+                    <h3>Enter Both Birth Dates</h3>
+                    <div class="date-inputs">
+                        <div class="person">
+                            <h4>Your Birth Date</h4>
+                            <div class="date-picker">
+                                <select id="year1">
+                                    <!-- Years will be generated by JavaScript -->
+                                </select>
+                                <select id="month1">
+                                    <!-- Months will be generated by JavaScript -->
+                                </select>
+                                <select id="day1">
+                                    <!-- Days will be generated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="person">
+                            <h4>Your Partner's Birth Date</h4>
+                            <div class="date-picker">
+                                <select id="year2">
+                                    <!-- Years will be generated by JavaScript -->
+                                </select>
+                                <select id="month2">
+                                    <!-- Months will be generated by JavaScript -->
+                                </select>
+                                <select id="day2">
+                                    <!-- Days will be generated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-btn">Calculate Compatibility</button>
+                </div>
+                
+                <div class="result-section" id="result-section">
+                    <!-- 结果将在这里显示 -->
+                </div>
+            </section>
+            
+            <section class="explanation">
+                <h2>About Chinese Zodiac & BaZi Compatibility</h2>
+                <div class="explanation-content">
+                    <div class="zodiac-info">
+                        <h3>Chinese Zodiac Compatibility</h3>
+                        <p>The Chinese zodiac consists of 12 animal signs, each representing different personality traits and destinies. Zodiac compatibility is one method for determining emotional harmony between two people.</p>
+                        
+                        <h4>Compatibility Rules</h4>
+                        <p>Zodiac matching is primarily based on these principles:</p>
+                        <ul>
+                            <li><strong>Trines (三合):</strong> Animals four years apart form the most harmonious relationships. 
+                                <br>Example: Rat, Dragon, and Monkey create a "trinity of harmony."</li>
+                            <li><strong>Six Harmonies (六合):</strong> Signs six years apart form balanced partnerships.
+                                <br>Example: Rat with Ox, Tiger with Pig.</li>
+                            <li><strong>Opposites (相冲):</strong> Signs six positions apart may experience relationship tension.
+                                <br>Example: Rat with Horse, Ox with Sheep.</li>
+                            <li><strong>Penalties (相刑):</strong> Certain signs naturally present relationship challenges.
+                                <br>Example: Dragon with Dog, Snake with Pig.</li>
+                        </ul>
+                        
+                        <h4>Zodiac Personality Traits</h4>
+                        <p>Each zodiac sign represents different personality characteristics:</p>
+                        <div class="zodiac-grid">
+                            <div class="zodiac-item"><strong>Rat:</strong> Intelligent, sociable, adaptable</div>
+                            <div class="zodiac-item"><strong>Ox:</strong> Diligent, persistent, stable</div>
+                            <div class="zodiac-item"><strong>Tiger:</strong> Brave, confident, energetic</div>
+                            <div class="zodiac-item"><strong>Rabbit:</strong> Gentle, elegant, harmonious</div>
+                            <div class="zodiac-item"><strong>Dragon:</strong> Charismatic, ambitious</div>
+                            <div class="zodiac-item"><strong>Snake:</strong> Wise, thoughtful, observant</div>
+                            <div class="zodiac-item"><strong>Horse:</strong> Energetic, freedom-loving</div>
+                            <div class="zodiac-item"><strong>Goat:</strong> Kind, creative, sensitive</div>
+                            <div class="zodiac-item"><strong>Monkey:</strong> Clever, versatile, humorous</div>
+                            <div class="zodiac-item"><strong>Rooster:</strong> Detail-oriented, perfectionist</div>
+                            <div class="zodiac-item"><strong>Dog:</strong> Loyal, honest, protective</div>
+                            <div class="zodiac-item"><strong>Pig:</strong> Honest, kind-hearted, easy-going</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bazi-info">
+                        <h3>BaZi Compatibility</h3>
+                        <p>BaZi, or "Eight Characters," is a fate calculation system based on a person's birth year, month, day, and hour. BaZi matching provides a more comprehensive analysis including the Five Elements theory.</p>
+                        
+                        <h4>Five Elements Relationships</h4>
+                        <p>The core concept of BaZi matching is the interaction between the Five Elements:</p>
+                        <ul>
+                            <li><strong>Generating Cycle:</strong> 
+                                <br>Wood → Fire → Earth → Metal → Water → Wood
+                                <br><em>(Each element creates or nourishes the next)</em>
+                            </li>
+                            <li><strong>Controlling Cycle:</strong> 
+                                <br>Wood ⊣ Earth ⊣ Water ⊣ Fire ⊣ Metal ⊣ Wood
+                                <br><em>(Each element controls or restricts another)</em>
+                            </li>
+                        </ul>
+                        
+                        <h4>BaZi Matching Elements</h4>
+                        <p>BaZi matching considers more than just zodiac signs, analyzing:</p>
+                        <div class="bazi-factors">
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Day Master's Element</strong></div>
+                                <div class="factor-desc">Represents one's core personality, the most important matching factor</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Year Pillar's Branch</strong></div>
+                                <div class="factor-desc">Corresponds to zodiac sign, reflects family background</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Hour Pillar's Branch</strong></div>
+                                <div class="factor-desc">Reflects inner qualities and potential development</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Birth Year's Element</strong></div>
+                                <div class="factor-desc">Influences subtle differences in relationship dynamics</div>
+                            </div>
+                        </div>
+                        
+                        <h4>Marriage Compatibility Assessment</h4>
+                        <p>Traditional BaZi marriage matching primarily examines:</p>
+                        <div class="bazi-factors">
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Three Talents Configuration</strong></div>
+                                <div class="factor-desc">Harmony between Heaven, Earth, and Human factors</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Five Elements Balance</strong></div>
+                                <div class="factor-desc">Whether both parties' elements complement each other</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Special Combinations</strong></div>
+                                <div class="factor-desc">Specific patterns that may affect marriage</div>
+                            </div>
+                            <div class="bazi-factor">
+                                <div class="factor-title"><strong>Luck Cycles</strong></div>
+                                <div class="factor-desc">How partners' fortunes change over different periods</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Note: This website is for entertainment purposes only. Please don't use the results as a basis for important decisions. True love and mutual understanding are the keys to any relationship.</p>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="https://loversmatchs.org" style="color: var(--apple-blue); text-decoration: none;">loversmatchs.org</a> All Rights Reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 生肖配对数据
+        const zodiacCompatibility = {
+            // 鼠
+            '鼠': {
+                '鼠': 80, '牛': 90, '虎': 60, '兔': 60, '龙': 95, '蛇': 60,
+                '马': 30, '羊': 40, '猴': 95, '鸡': 60, '狗': 65, '猪': 80
+            },
+            // 牛
+            '牛': {
+                '鼠': 90, '牛': 70, '虎': 30, '兔': 65, '龙': 40, '蛇': 90,
+                '马': 40, '羊': 20, '猴': 60, '鸡': 90, '狗': 70, '猪': 60
+            },
+            // 虎
+            '虎': {
+                '鼠': 60, '牛': 30, '虎': 50, '兔': 85, '龙': 85, '蛇': 40,
+                '马': 90, '羊': 60, '猴': 30, '鸡': 50, '狗': 95, '猪': 90
+            },
+            // 兔
+            '兔': {
+                '鼠': 60, '牛': 65, '虎': 85, '兔': 75, '龙': 60, '蛇': 40,
+                '马': 60, '羊': 90, '猴': 70, '鸡': 30, '狗': 90, '猪': 95
+            },
+            // 龙
+            '龙': {
+                '鼠': 95, '牛': 40, '虎': 85, '兔': 60, '龙': 70, '蛇': 80,
+                '马': 70, '羊': 50, '猴': 90, '鸡': 85, '狗': 30, '猪': 65
+            },
+            // 蛇
+            '蛇': {
+                '鼠': 60, '牛': 90, '虎': 40, '兔': 40, '龙': 80, '蛇': 70,
+                '马': 60, '羊': 70, '猴': 60, '鸡': 95, '狗': 60, '猪': 30
+            },
+            // 马
+            '马': {
+                '鼠': 30, '牛': 40, '虎': 90, '兔': 60, '龙': 70, '蛇': 60,
+                '马': 50, '羊': 90, '猴': 70, '鸡': 40, '狗': 90, '猪': 60
+            },
+            // 羊
+            '羊': {
+                '鼠': 40, '牛': 20, '虎': 60, '兔': 90, '龙': 50, '蛇': 70,
+                '马': 90, '羊': 70, '猴': 60, '鸡': 70, '狗': 40, '猪': 90
+            },
+            // 猴
+            '猴': {
+                '鼠': 95, '牛': 60, '虎': 30, '兔': 70, '龙': 90, '蛇': 60,
+                '马': 70, '羊': 60, '猴': 80, '鸡': 70, '狗': 80, '猪': 40
+            },
+            // 鸡
+            '鸡': {
+                '鼠': 60, '牛': 90, '虎': 50, '兔': 30, '龙': 85, '蛇': 95,
+                '马': 40, '羊': 70, '猴': 70, '鸡': 60, '狗': 40, '猪': 70
+            },
+            // 狗
+            '狗': {
+                '鼠': 65, '牛': 70, '虎': 95, '兔': 90, '龙': 30, '蛇': 60,
+                '马': 90, '羊': 40, '猴': 80, '鸡': 40, '狗': 70, '猪': 85
+            },
+            // 猪
+            '猪': {
+                '鼠': 80, '牛': 60, '虎': 90, '兔': 95, '龙': 65, '蛇': 30,
+                '马': 60, '羊': 90, '猴': 40, '鸡': 70, '狗': 85, '猪': 75
+            }
+        };
+
+        // 五行配对数据
+        const fiveElementsCompatibility = {
+            '金': { '金': 70, '木': 40, '水': 90, '火': 30, '土': 80 },
+            '木': { '金': 40, '木': 70, '水': 85, '火': 90, '土': 50 },
+            '水': { '金': 90, '木': 85, '水': 70, '火': 40, '土': 30 },
+            '火': { '金': 30, '木': 90, '水': 40, '火': 70, '土': 80 },
+            '土': { '金': 80, '木': 50, '水': 30, '火': 80, '土': 70 }
+        };
+
+        // 生肖与出生年份对应表
+        const zodiacYears = {
+            '鼠': [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020],
+            '牛': [1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021],
+            '虎': [1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022],
+            '兔': [1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023],
+            '龙': [1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024],
+            '蛇': [1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025],
+            '马': [1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026],
+            '羊': [1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027],
+            '猴': [1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028],
+            '鸡': [1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029],
+            '狗': [1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030],
+            '猪': [1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031]
+        };
+
+        // 年份与五行对应表
+        const yearElement = {
+            0: '金', 1: '金', 
+            2: '水', 3: '水', 
+            4: '木', 5: '木', 
+            6: '火', 7: '火', 
+            8: '土', 9: '土'
+        };
+
+        // 日期与生肖对应
+        function getZodiac(year) {
+            for (const [zodiac, years] of Object.entries(zodiacYears)) {
+                if (years.includes(year)) {
+                    return zodiac;
+                }
+            }
+            // 如果没有直接匹配，计算生肖
+            const base = (year - 4) % 12;
+            const zodiacArray = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+            return zodiacArray[base];
+        }
+        
+        // 中文生肖翻译成英文
+        function translateZodiac(chineseZodiac) {
+            const translations = {
+                '鼠': 'Rat',
+                '牛': 'Ox',
+                '虎': 'Tiger',
+                '兔': 'Rabbit',
+                '龙': 'Dragon',
+                '蛇': 'Snake',
+                '马': 'Horse',
+                '羊': 'Goat',
+                '猴': 'Monkey',
+                '鸡': 'Rooster',
+                '狗': 'Dog',
+                '猪': 'Pig'
+            };
+            return translations[chineseZodiac] || chineseZodiac;
+        }
+
+        // 获取五行属性
+        function getElement(year) {
+            const lastDigit = year % 10;
+            return yearElement[lastDigit];
+        }
+        
+        // 中文五行翻译成英文
+        function translateElement(chineseElement) {
+            const translations = {
+                '金': 'Metal',
+                '木': 'Wood',
+                '水': 'Water',
+                '火': 'Fire',
+                '土': 'Earth'
+            };
+            return translations[chineseElement] || chineseElement;
+        }
+
+        // 初始化日期选择器
+        function initDateSelectors() {
+            const currentYear = new Date().getFullYear();
+            
+            // 年份选择器
+            const yearSelectors = [document.getElementById('year1'), document.getElementById('year2')];
+            for (let i = currentYear - 100; i <= currentYear; i++) {
+                yearSelectors.forEach(selector => {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    if (i === currentYear - 30) option.selected = true;
+                    selector.appendChild(option);
+                });
+            }
+            
+            // 月份选择器
+            const monthSelectors = [document.getElementById('month1'), document.getElementById('month2')];
+            for (let i = 1; i <= 12; i++) {
+                monthSelectors.forEach(selector => {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    // 英文月份名称
+                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                    option.textContent = monthNames[i-1];
+                    selector.appendChild(option);
+                });
+            }
+            
+            // 日期选择器
+            updateDayOptions('month1', 'year1', 'day1');
+            updateDayOptions('month2', 'year2', 'day2');
+            
+            // 添加事件监听器
+            document.getElementById('month1').addEventListener('change', () => updateDayOptions('month1', 'year1', 'day1'));
+            document.getElementById('year1').addEventListener('change', () => updateDayOptions('month1', 'year1', 'day1'));
+            document.getElementById('month2').addEventListener('change', () => updateDayOptions('month2', 'year2', 'day2'));
+            document.getElementById('year2').addEventListener('change', () => updateDayOptions('month2', 'year2', 'day2'));
+        }
+
+        // 更新日期选择器
+        function updateDayOptions(monthId, yearId, dayId) {
+            const month = parseInt(document.getElementById(monthId).value);
+            const year = parseInt(document.getElementById(yearId).value);
+            const daySelect = document.getElementById(dayId);
+            
+            // 清空现有选项
+            daySelect.innerHTML = '';
+            
+            // 计算当月天数
+            let daysInMonth;
+            if ([4, 6, 9, 11].includes(month)) {
+                daysInMonth = 30;
+            } else if (month === 2) {
+                daysInMonth = ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) ? 29 : 28;
+            } else {
+                daysInMonth = 31;
+            }
+            
+            // 添加选项
+            for (let i = 1; i <= daysInMonth; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+        }
+
+        // 计算配对得分
+        function calculateCompatibility() {
+            // 获取输入的日期
+            const year1 = parseInt(document.getElementById('year1').value);
+            const year2 = parseInt(document.getElementById('year2').value);
+            
+            // 获取生肖
+            const zodiac1 = getZodiac(year1);
+            const zodiac2 = getZodiac(year2);
+            
+            // 获取五行
+            const element1 = getElement(year1);
+            const element2 = getElement(year2);
+            
+            // 计算生肖配对得分
+            const zodiacScore = zodiacCompatibility[zodiac1][zodiac2];
+            
+            // 计算五行配对得分
+            const elementScore = fiveElementsCompatibility[element1][element2];
+            
+            // 计算日期和月份因素 (简化版)
+            const month1 = parseInt(document.getElementById('month1').value);
+            const month2 = parseInt(document.getElementById('month2').value);
+            const day1 = parseInt(document.getElementById('day1').value);
+            const day2 = parseInt(document.getElementById('day2').value);
+            
+            // 月份相合度
+            let monthCompatibility = 70;
+            const monthDiff = Math.abs(month1 - month2);
+            if (monthDiff === 0) {
+                monthCompatibility = 85; // 同月出生
+            } else if (monthDiff === 6) {
+                monthCompatibility = 60; // 相对月份
+            } else if (monthDiff === 3 || monthDiff === 9) {
+                monthCompatibility = 75; // 季节关系
+            }
+            
+            // 日期相合度
+            let dayCompatibility = 70;
+            const dayDiff = Math.abs(day1 - day2);
+            if (dayDiff === 0) {
+                dayCompatibility = 85; // 同日出生
+            } else if (dayDiff <= 3) {
+                dayCompatibility = 80; // 接近的日期
+            } else if (dayDiff >= 15) {
+                dayCompatibility = 65; // 相距较远的日期
+            }
+            
+            // 综合得分计算
+            const totalScore = Math.round(
+                (zodiacScore * 0.4) +  // 生肖权重40%
+                (elementScore * 0.3) + // 五行权重30%
+                (monthCompatibility * 0.15) + // 月份权重15%
+                (dayCompatibility * 0.15)     // 日期权重15%
+            );
+            
+            // 展示结果
+            displayResults(zodiac1, zodiac2, element1, element2, zodiacScore, elementScore, monthCompatibility, dayCompatibility, totalScore);
+        }
+
+        // 显示结果
+        function displayResults(zodiac1, zodiac2, element1, element2, zodiacScore, elementScore, monthScore, dayScore, totalScore) {
+            const resultSection = document.getElementById('result-section');
+            
+            // 基于总分的评价
+            let scoreComment = '';
+            if (totalScore >= 90) {
+                scoreComment = 'A perfect match! Your relationship has an exceptionally high compatibility, and you will be very happy together.';
+            } else if (totalScore >= 80) {
+                scoreComment = 'Highly compatible! Your relationship is harmonious and stable, with shared values and good chemistry.';
+            } else if (totalScore >= 70) {
+                scoreComment = 'Well matched! Despite occasional differences, you generally get along harmoniously.';
+            } else if (totalScore >= 60) {
+                scoreComment = 'Compatible! Some challenges may exist in your relationship, but they can be overcome through communication.';
+            } else if (totalScore >= 50) {
+                scoreComment = 'Moderately matched. Your relationship requires more understanding and tolerance to maintain stability.';
+            } else {
+                scoreComment = 'Low compatibility. You may have significant differences in many aspects and will need extra effort to nurture the relationship.';
+            }
+            
+                         // 设置圆环进度条百分比
+            const scorePercentage = `${totalScore}%`;
+            
+            // 创建结果HTML
+            resultSection.innerHTML = `
+                <div class="result-header">
+                    <h3>Compatibility Results</h3>
+                    <p>Comprehensive analysis based on Chinese Zodiac & BaZi</p>
+                </div>
+                
+                <div class="compatibility-score" style="--score: ${scorePercentage}">
+                    <div class="score-text">${totalScore}</div>
+                </div>
+                
+                <p class="score-comment">${scoreComment}</p>
+                
+                <div class="compatibility-details">
+                    <div class="compatibility-item">
+                        <h4>Zodiac Compatibility</h4>
+                        <p>You are a <strong>${translateZodiac(zodiac1)}</strong>, your partner is a <strong>${translateZodiac(zodiac2)}</strong></p>
+                        <p>Zodiac harmony score: <strong>${zodiacScore}</strong>/100</p>
+                        <p>${getZodiacCompatibilityComment(zodiacScore)}</p>
+                    </div>
+                    
+                    <div class="compatibility-item">
+                        <h4>Five Elements Compatibility</h4>
+                        <p>Your element is <strong>${translateElement(element1)}</strong>, your partner's element is <strong>${translateElement(element2)}</strong></p>
+                        <p>Element harmony score: <strong>${elementScore}</strong>/100</p>
+                        <p>${getElementCompatibilityComment(element1, element2)}</p>
+                    </div>
+                    
+                    <div class="compatibility-item">
+                        <h4>Date Factors</h4>
+                        <p>Month compatibility: <strong>${monthScore}</strong>/100</p>
+                        <p>Day compatibility: <strong>${dayScore}</strong>/100</p>
+                    </div>
+                </div>
+                
+                <div class="recommendation">
+                    <h4>Relationship Advice</h4>
+                    <p>${getLoveAdvice(totalScore, zodiac1, zodiac2)}</p>
+                </div>
+            `;
+            
+            // 显示结果部分
+            resultSection.classList.add('active');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 生肖配对评价
+        function getZodiacCompatibilityComment(score) {
+            if (score >= 90) {
+                return 'Your zodiac signs are highly compatible, allowing for mutual understanding and support, forming a solid foundation for your relationship.';
+            } else if (score >= 75) {
+                return 'Your zodiac signs are quite compatible, with complementary personalities that can form a good relationship.';
+            } else if (score >= 60) {
+                return 'Your zodiac relationship is moderate, with some common ground but also differences that need harmonizing.';
+            } else if (score >= 45) {
+                return 'Your zodiac signs have some conflicts, requiring more tolerance and understanding to maintain the relationship.';
+            } else {
+                return 'Your zodiac signs clash, potentially causing significant differences in personality and approaches to life.';
+            }
+        }
+
+        // 五行配对评价
+        function getElementCompatibilityComment(element1, element2) {
+            if (element1 === element2) {
+                return 'Your elemental attributes are the same, giving you similar personality traits and making it easier to understand each other.';
+            }
+            
+            const relationships = {
+                '金水': 'Metal generates Water: your relationship has nourishment and support, allowing mutual growth.',
+                '水金': 'Water enhances Metal: you provide support and confidence to each other, forming positive interactions.',
+                '木火': 'Wood feeds Fire: your relationship is full of passion and creativity, with mutual inspiration.',
+                '火木': 'Fire enhances Wood: your enthusiasm drives each other\'s growth, creating a positive energy cycle.',
+                '火土': 'Fire creates Earth: you can build a solid relationship foundation through emotional exchange.',
+                '土火': 'Earth supports Fire: your relationship is stable yet vibrant, with mutual support.',
+                '土金': 'Earth bears Metal: your relationship has a solid foundation for creating value together.',
+                '金土': 'Metal enhances Earth: you help each other build a stable life together.',
+                '水木': 'Water nourishes Wood: your relationship has room for nurturing and growth, full of vitality.',
+                '木水': 'Wood enhances Water: your relationship is fluid and dynamic, with potential for shared development.',
+                '金木': 'Metal controls Wood: you may have conflicts in decision-making and action styles.',
+                '木金': 'Wood controls Metal: your values and lifestyles may differ.',
+                '木土': 'Wood parts Earth: you may have conflicts between stability and adventure.',
+                '土木': 'Earth controls Wood: your life rhythms and growth patterns may differ.',
+                '土水': 'Earth absorbs Water: your emotional expression styles and fluidity may differ.',
+                '水土': 'Water controls Earth: you may have different needs for security and freedom.',
+                '水火': 'Water extinguishes Fire: there may be tension between passion and rationality.',
+                '火水': 'Fire controls Water: your emotional expression and communication styles may need adjustment.',
+                '火金': 'Fire melts Metal: your values and lifestyles may differ.',
+                '金火': 'Metal controls Fire: your expression styles and passion levels may differ.'
+            };
+            
+            return relationships[element1 + element2] || 'Your Five Elements relationship is complex, requiring mutual adaptation and understanding.';
+        }
+
+        // 爱情建议
+        function getLoveAdvice(score, zodiac1, zodiac2) {
+            const generalAdvice = [
+                'Honest communication is key to maintaining your relationship. Try to understand each other\'s thoughts and feelings.',
+                'Accept your differences and find common interests and values.',
+                'Give each other enough space and freedom while maintaining emotional connection.',
+                'Set long-term goals together and work towards them to strengthen your relationship.',
+                'Support each other through difficult times. Facing challenges together will make your relationship stronger.'
+            ];
+            
+            let specificAdvice = '';
+            
+            if (score >= 85) {
+                specificAdvice = 'Your compatibility is very high. Cherish this rare connection. Even though you get along well, keep things fresh by exploring and growing together.';
+            } else if (score >= 70) {
+                specificAdvice = 'You have a good foundation for compatibility. Focus on leveraging your individual strengths, appreciating and learning from each other to enrich your relationship.';
+            } else if (score >= 55) {
+                specificAdvice = 'Your relationship has certain challenges but is full of possibilities. Learn to put yourself in each other\'s shoes, understand each other\'s needs and feelings, and overcome difficulties together.';
+            } else {
+                specificAdvice = 'Although your compatibility score is low, true love can overcome all obstacles. If you truly love each other, you\'ll need extra patience and tolerance, and establish good communication mechanisms.';
+            }
+            
+            // 根据生肖特点给出具体建议 (English zodiac advice)
+            const zodiacAdvice = {
+                '鼠': 'Socially adept and adaptable, but be careful not to be too calculating. Learn to express feelings genuinely.',
+                '牛': 'Reliable and steady, but sometimes stubborn. Learn to compromise and accept new things.',
+                '虎': 'Brave and decisive, but try to control your temper and provide more security for your partner.',
+                '兔': 'Gentle and considerate, but sometimes oversensitive. Learn to express your needs directly.',
+                '龙': 'Confident and charismatic, but be careful not to be too self-centered. Learn to listen to and respect your partner\'s opinions.',
+                '蛇': 'Wise and thoughtful, but sometimes too cautious. Learn to be more open and trusting with your partner.',
+                '马': 'Energetic and optimistic, but may lack patience. Learn to persevere and take responsibility.',
+                '羊': 'Kind and creative, but sometimes indecisive. Develop independence and decisiveness.',
+                '猴': 'Clever and versatile, but sometimes too active. Learn to calm down and focus on your relationship.',
+                '鸡': 'Meticulous and conscientious, but sometimes too critical. Learn to accept imperfection.',
+                '狗': 'Loyal and reliable, but sometimes suspicious. Learn to trust and let go.',
+                '猪': 'Honest and kind, but sometimes too idealistic. Learn to face realistic challenges.'
+            };
+            
+            return `${specificAdvice}<br><br>For you (${translateZodiac(zodiac1)}): ${zodiacAdvice[zodiac1]}<br><br>For your partner (${translateZodiac(zodiac2)}): ${zodiacAdvice[zodiac2]}<br><br>${generalAdvice[Math.floor(Math.random() * generalAdvice.length)]}`;
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            initDateSelectors();
+            document.getElementById('calculate-btn').addEventListener('click', calculateCompatibility);
+        });
+    </script>
+</body>
+</html> 
