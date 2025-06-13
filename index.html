@@ -483,6 +483,30 @@
             .zodiac-item, .bazi-factor {
                 padding: 12px;
             }
+            
+            /* 移动端图表优化 */
+            .chart-wrapper {
+                max-width: 250px;
+            }
+            
+            .bazi-chart {
+                padding: 15px 10px;
+                min-width: 280px;
+            }
+            
+            .bazi-pillars {
+                gap: 10px;
+            }
+            
+            .pillar {
+                width: 50px;
+            }
+            
+            .stem, .branch {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
         }
         
         /* 八字命盘样式 */
@@ -509,11 +533,21 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .bazi-chart h5 {
             margin: 15px 0;
             color: var(--apple-dark-gray);
+        }
+        
+        .chart-wrapper {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            position: relative;
         }
         
         .bazi-pillars {
@@ -561,6 +595,7 @@
         canvas {
             max-width: 100%;
             height: auto;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -1374,7 +1409,9 @@
                     <h4>Your BaZi Charts</h4>
                     <div class="chart-container">
                         <div class="bazi-chart">
-                            <canvas id="fiveElementsChart1"></canvas>
+                            <div class="chart-wrapper">
+                                <canvas id="fiveElementsChart1"></canvas>
+                            </div>
                             <h5>Your BaZi Chart</h5>
                             <div class="bazi-pillars">
                                 <div class="pillar">
@@ -1400,7 +1437,9 @@
                             </div>
                         </div>
                         <div class="bazi-chart">
-                            <canvas id="fiveElementsChart2"></canvas>
+                            <div class="chart-wrapper">
+                                <canvas id="fiveElementsChart2"></canvas>
+                            </div>
                             <h5>Your Partner's BaZi Chart</h5>
                             <div class="bazi-pillars">
                                 <div class="pillar">
@@ -1566,6 +1605,14 @@
                 type: 'radar',
                 data: data,
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    layout: {
+                        padding: {
+                            top: 5,
+                            bottom: 5
+                        }
+                    },
                     elements: {
                         line: {
                             borderWidth: 3
@@ -1579,7 +1626,18 @@
                             suggestedMin: 0,
                             suggestedMax: 8,
                             ticks: {
-                                stepSize: 2
+                                stepSize: 2,
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: function(context) {
+                                        const width = context.chart.width;
+                                        return width < 400 ? 9 : 12;
+                                    }
+                                }
                             }
                         }
                     },
@@ -1593,6 +1651,15 @@
             
             // 创建图表
             new Chart(ctx, config);
+            
+            // 确保图表居中
+            setTimeout(() => {
+                const canvas = document.getElementById(canvasId);
+                if (canvas) {
+                    canvas.style.display = 'block';
+                    canvas.style.margin = '0 auto';
+                }
+            }, 100);
         }
 
         // 生肖配对评价
