@@ -358,6 +358,178 @@
             padding-left: 5px;
         }
         
+        /* 分析类型选择器样式 */
+        .analysis-selector {
+            text-align: center;
+            padding: 30px;
+            margin-bottom: 20px;
+            background-color: var(--apple-light-gray);
+            border-radius: 12px;
+        }
+        
+        .analysis-selector h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--apple-dark-gray);
+        }
+        
+        .analysis-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .analysis-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            border: 3px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: var(--apple-dark-gray);
+        }
+        
+        .analysis-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .analysis-btn.active {
+            border-color: var(--apple-blue);
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-light-blue));
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .btn-icon {
+            font-size: 2rem;
+        }
+        
+        .btn-text {
+            text-align: left;
+        }
+        
+        .btn-text strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .btn-text small {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* MBTI 输入样式 */
+        .mbti-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .mbti-selector {
+            width: 100%;
+        }
+        
+        .mbti-selector select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: white;
+            color: var(--apple-dark-gray);
+            transition: border-color 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+        }
+        
+        .mbti-selector select option {
+            background-color: white;
+            color: var(--apple-dark-gray);
+            padding: 10px;
+        }
+        
+        .mbti-selector select:focus {
+            border-color: var(--apple-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        /* MBTI 结果显示样式 */
+        .mbti-types {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+        
+        .mbti-type {
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-light-blue));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .vs {
+            font-size: 2rem;
+            animation: heartBeat 1.5s infinite;
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .overall-compatibility {
+            text-align: center;
+            background: linear-gradient(135deg, var(--apple-light-green), #e8f5e8);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        
+        .overall-compatibility h4 {
+            color: var(--apple-dark-gray);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .relationship-advice {
+            background: var(--apple-light-pink);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .relationship-advice h4 {
+            color: var(--apple-dark-gray);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
         /* 新增的生肖网格布局 */
         .zodiac-grid {
             display: grid;
@@ -759,7 +931,29 @@
                 <p>In Chinese tradition, the Zodiac and BaZi are mystical keys to predicting emotional harmony between two souls. Enter your birthdays, and we'll reveal your zodiac compatibility, elemental balance, and provide a comprehensive analysis of your connection. Every relationship is a cosmic miracle carefully woven by the universe - unlock your love's hidden code now!</p>
             </section>
             
-            <section class="calculator">
+            <!-- Analysis Type Selector -->
+            <section class="analysis-selector">
+                <h3>Choose Your Analysis Type</h3>
+                <div class="analysis-buttons">
+                    <button id="bazi-mode-btn" class="analysis-btn active">
+                        <span class="btn-icon">🔮</span>
+                        <span class="btn-text">
+                            <strong>BaZi Compatibility</strong>
+                            <small>Chinese BaZi & Zodiac</small>
+                        </span>
+                    </button>
+                    <button id="mbti-mode-btn" class="analysis-btn">
+                        <span class="btn-icon">🧠</span>
+                        <span class="btn-text">
+                            <strong>MBTI Compatibility</strong>
+                            <small>Personality Matching</small>
+                        </span>
+                    </button>
+                </div>
+            </section>
+            
+            <!-- BaZi Calculator -->
+            <section class="calculator" id="bazi-calculator">
                 <div class="load-record-section" id="load-record-section" style="display: none;">
                     <p>Previous record found</p>
                     <button id="load-record-btn" class="load-record-btn">Load Previous Record</button>
@@ -814,6 +1008,70 @@
                 
                 <div class="result-section" id="result-section">
                     <!-- 结果将在这里显示 -->
+                </div>
+            </section>
+            
+            <!-- MBTI Calculator -->
+            <section class="calculator" id="mbti-calculator" style="display: none;">
+                <div class="input-section">
+                    <h3>Select Your MBTI Types for Compatibility Analysis</h3>
+                    <div class="mbti-inputs">
+                        <div class="person">
+                            <h4>Your MBTI Type</h4>
+                            <div class="mbti-selector">
+                                <select id="mbti1">
+                                    <option value="">Select Your MBTI Type</option>
+                                    <option value="INTJ">INTJ - The Architect</option>
+                                    <option value="INTP">INTP - The Logician</option>
+                                    <option value="ENTJ">ENTJ - The Commander</option>
+                                    <option value="ENTP">ENTP - The Debater</option>
+                                    <option value="INFJ">INFJ - The Advocate</option>
+                                    <option value="INFP">INFP - The Mediator</option>
+                                    <option value="ENFJ">ENFJ - The Protagonist</option>
+                                    <option value="ENFP">ENFP - The Campaigner</option>
+                                    <option value="ISTJ">ISTJ - The Logistician</option>
+                                    <option value="ISFJ">ISFJ - The Defender</option>
+                                    <option value="ESTJ">ESTJ - The Executive</option>
+                                    <option value="ESFJ">ESFJ - The Consul</option>
+                                    <option value="ISTP">ISTP - The Virtuoso</option>
+                                    <option value="ISFP">ISFP - The Adventurer</option>
+                                    <option value="ESTP">ESTP - The Entrepreneur</option>
+                                    <option value="ESFP">ESFP - The Entertainer</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="person">
+                            <h4>Your Partner's MBTI Type</h4>
+                            <div class="mbti-selector">
+                                <select id="mbti2">
+                                    <option value="">Select Partner's MBTI Type</option>
+                                    <option value="INTJ">INTJ - The Architect</option>
+                                    <option value="INTP">INTP - The Logician</option>
+                                    <option value="ENTJ">ENTJ - The Commander</option>
+                                    <option value="ENTP">ENTP - The Debater</option>
+                                    <option value="INFJ">INFJ - The Advocate</option>
+                                    <option value="INFP">INFP - The Mediator</option>
+                                    <option value="ENFJ">ENFJ - The Protagonist</option>
+                                    <option value="ENFP">ENFP - The Campaigner</option>
+                                    <option value="ISTJ">ISTJ - The Logistician</option>
+                                    <option value="ISFJ">ISFJ - The Defender</option>
+                                    <option value="ESTJ">ESTJ - The Executive</option>
+                                    <option value="ESFJ">ESFJ - The Consul</option>
+                                    <option value="ISTP">ISTP - The Virtuoso</option>
+                                    <option value="ISFP">ISFP - The Adventurer</option>
+                                    <option value="ESTP">ESTP - The Entrepreneur</option>
+                                    <option value="ESFP">ESFP - The Entertainer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-mbti-btn">Analyze MBTI Compatibility</button>
+                </div>
+                
+                <div class="result-section" id="mbti-result-section">
+                    <!-- MBTI结果将在这里显示 -->
                 </div>
             </section>
             
@@ -1208,7 +1466,7 @@
             // 小时选择器 - 同样使用DocumentFragment优化
             const hourSelectors = [document.getElementById('hour1'), document.getElementById('hour2')];
             const hours = [
-                { value: -1, text: 'Time of birth unknown' },
+                { value: -1, text: 'Unknown (optional)' },
                 { value: 0, text: '23:00 - 00:59 (子時 Rat)' },
                 { value: 1, text: '01:00 - 02:59 (丑時 Ox)' },
                 { value: 2, text: '03:00 - 04:59 (寅時 Tiger)' },
@@ -1269,6 +1527,176 @@
                 fragment.appendChild(option);
             }
             daySelect.appendChild(fragment);
+        }
+
+        // MBTI 匹配度计算函数
+        function calculateMbtiCompatibility() {
+            const mbti1 = document.getElementById('mbti1').value;
+            const mbti2 = document.getElementById('mbti2').value;
+            
+            if (!mbti1 || !mbti2) {
+                alert('Please select both MBTI types');
+                return;
+            }
+            
+            // Analyze four dimensions of compatibility
+            const dimensions = [
+                { name: 'E/I', index: 0, label: 'Extraversion vs Introversion' },
+                { name: 'S/N', index: 1, label: 'Sensing vs Intuition' },
+                { name: 'T/F', index: 2, label: 'Thinking vs Feeling' },
+                { name: 'J/P', index: 3, label: 'Judging vs Perceiving' }
+            ];
+            
+            let compatibilityAnalysis = [];
+            let totalCompatibilityScore = 0;
+            
+            dimensions.forEach(dim => {
+                const char1 = mbti1[dim.index];
+                const char2 = mbti2[dim.index];
+                
+                let compatibility, description, points;
+                
+                if (char1 === char2) {
+                    compatibility = 'Highly Compatible';
+                    points = 3;
+                    description = getDimensionSameDescription(dim.name, char1);
+                } else {
+                    compatibility = 'Complementary Balance';
+                    points = 2;
+                    description = getDimensionOppositeDescription(dim.name, char1, char2);
+                }
+                
+                totalCompatibilityScore += points;
+                
+                compatibilityAnalysis.push({
+                    dimension: dim.label,
+                    compatibility,
+                    description,
+                    points
+                });
+            });
+            
+            // Calculate overall compatibility level
+            let overallCompatibility, overallDescription, advice;
+            
+            if (totalCompatibilityScore >= 11) {
+                overallCompatibility = 'Exceptionally Compatible';
+                overallDescription = 'Your personality types are exceptionally well-matched, with many shared traits that enable deep understanding of each other\'s thoughts and feelings.';
+                advice = 'Maintain open communication and cherish this rare mental connection. Seek growth opportunities within your similarities.';
+            } else if (totalCompatibilityScore >= 9) {
+                overallCompatibility = 'Highly Compatible';
+                overallDescription = 'Your personality types are highly compatible, sharing common ground while offering complementary aspects that foster mutual growth.';
+                advice = 'Leverage your similarities to build deep connections while appreciating the fresh perspectives your differences bring.';
+            } else if (totalCompatibilityScore >= 7) {
+                overallCompatibility = 'Moderately Compatible';
+                overallDescription = 'Your relationship requires more understanding and communication, but these differences make the relationship more interesting and full of growth opportunities.';
+                advice = 'Communicate more about thoughts and feelings, and learn to appreciate different ways of thinking. Patience is key.';
+            } else {
+                overallCompatibility = 'Requires Understanding';
+                overallDescription = 'Your personality types have significant differences, requiring more understanding, patience, and communication to build a harmonious relationship.';
+                advice = 'Focus on finding common ground and respecting differences. Use open dialogue to resolve potential conflicts.';
+            }
+            
+            // 显示 MBTI 结果
+            displayMbtiResults(mbti1, mbti2, compatibilityAnalysis, overallCompatibility, overallDescription, advice);
+        }
+        
+        // Get description for same dimension preferences
+        function getDimensionSameDescription(dimension, char) {
+            const descriptions = {
+                'E': 'Both of you are extraverted, enjoying social interaction and communication. You can mutually support and understand each other in social environments.',
+                'I': 'Both of you are introverted, preferring quiet environments and deep reflection. You can enjoy each other\'s company without needing much external stimulation.',
+                'S': 'Both of you are sensing types, focusing on reality and details. You\'ll have great harmony when handling practical matters.',
+                'N': 'Both of you are intuitive types, enjoying exploring possibilities and innovative ideas. You can resonate on dreams and future planning.',
+                'T': 'Both of you are thinking types, valuing logic and objective analysis. You can maintain rationality and consistency in decision-making.',
+                'F': 'Both of you are feeling types, valuing relationships and personal values. You can deeply understand each other\'s emotional needs.',
+                'J': 'Both of you are judging types, preferring planning and structure. You\'ll have great harmony in life arrangements and decision-making.',
+                'P': 'Both of you are perceiving types, enjoying flexibility and spontaneity. You can together embrace life\'s uncertainties and surprises.'
+            };
+            return descriptions[char] || 'You share similar preferences in this dimension.';
+        }
+        
+        // Get description for opposite dimension preferences
+        function getDimensionOppositeDescription(dimension, char1, char2) {
+            const descriptions = {
+                'E-I': char1 === 'E' ? 
+                    'One extraverted, one introverted - the extraverted partner brings social energy while the introverted partner provides quiet reflection space, creating excellent balance.' :
+                    'One introverted, one extraverted - the introverted partner provides deep thinking while the extraverted partner brings social vitality, complementing each other perfectly.',
+                'S-N': char1 === 'S' ? 
+                    'One focused on reality, one imaginative - the realist provides stable foundation while the idealist brings innovative thinking.' :
+                    'One imaginative, one focused on reality - the idealist provides creative perspectives while the realist ensures practical implementation.',
+                'T-F': char1 === 'T' ? 
+                    'One rational, one emotional - the rational partner provides objective analysis while the emotional partner brings warmth, forming an ideal decision-making combination.' :
+                    'One emotional, one rational - the emotional partner provides feeling support while the rational partner brings objective thinking, balancing each other.',
+                'J-P': char1 === 'J' ? 
+                    'One prefers planning, one prefers flexibility - the planner provides structure and stability while the flexible one brings surprises and variety.' :
+                    'One prefers flexibility, one prefers planning - the flexible one provides life\'s excitement while the planner ensures goal achievement.'
+            };
+            const key = dimension === 'E/I' ? 'E-I' : dimension === 'S/N' ? 'S-N' : dimension === 'T/F' ? 'T-F' : 'J-P';
+            return descriptions[key] || 'You form excellent complementarity in this dimension.';
+        }
+        
+        // 显示 MBTI 结果
+        function displayMbtiResults(mbti1, mbti2, analysis, overall, description, advice) {
+            const resultSection = document.getElementById('mbti-result-section');
+            
+            let analysisHtml = '';
+            analysis.forEach(item => {
+                analysisHtml += `
+                    <div class="compatibility-item">
+                        <h4>${item.dimension}</h4>
+                        <p><strong>Compatibility:</strong> ${item.compatibility}</p>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+            });
+            
+            resultSection.innerHTML = `
+                <div class="result-header">
+                    <h3>MBTI Compatibility Analysis Results</h3>
+                    <div class="mbti-types">
+                        <span class="mbti-type">${mbti1}</span>
+                        <span class="vs">💕</span>
+                        <span class="mbti-type">${mbti2}</span>
+                    </div>
+                </div>
+                
+                <div class="overall-compatibility">
+                    <h4>Overall Compatibility: ${overall}</h4>
+                    <p>${description}</p>
+                </div>
+                
+                <div class="compatibility-details">
+                    ${analysisHtml}
+                </div>
+                
+                <div class="relationship-advice">
+                    <h4>Relationship Advice</h4>
+                    <p>${advice}</p>
+                </div>
+            `;
+            
+            resultSection.classList.add('active');
+        }
+        
+        // 界面切换函数
+        function switchToMode(mode) {
+            const baziBtn = document.getElementById('bazi-mode-btn');
+            const mbtiBtn = document.getElementById('mbti-mode-btn');
+            const baziCalculator = document.getElementById('bazi-calculator');
+            const mbtiCalculator = document.getElementById('mbti-calculator');
+            
+            if (mode === 'bazi') {
+                baziBtn.classList.add('active');
+                mbtiBtn.classList.remove('active');
+                baziCalculator.style.display = 'block';
+                mbtiCalculator.style.display = 'none';
+            } else if (mode === 'mbti') {
+                mbtiBtn.classList.add('active');
+                baziBtn.classList.remove('active');
+                mbtiCalculator.style.display = 'block';
+                baziCalculator.style.display = 'none';
+            }
         }
 
         // 计算配对得分
@@ -2133,7 +2561,11 @@
                 }
             }, 10);
             
+            // 绑定事件监听器
             document.getElementById('calculate-btn').addEventListener('click', calculateCompatibility);
+            document.getElementById('calculate-mbti-btn').addEventListener('click', calculateMbtiCompatibility);
+            document.getElementById('bazi-mode-btn').addEventListener('click', () => switchToMode('bazi'));
+            document.getElementById('mbti-mode-btn').addEventListener('click', () => switchToMode('mbti'));
         });
     </script>
 </body>
