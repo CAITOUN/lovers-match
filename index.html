@@ -597,6 +597,141 @@
             height: auto;
             margin: 0 auto;
         }
+
+        /* 分享和保存功能样式 */
+        .share-save-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .share-btn, .save-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--main-font);
+        }
+
+        .share-btn {
+            background-color: var(--apple-blue);
+            color: white;
+        }
+
+        .share-btn:hover {
+            background-color: var(--apple-light-blue);
+            transform: translateY(-2px);
+        }
+
+        .save-btn {
+            background-color: var(--apple-green);
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #2db84a;
+            transform: translateY(-2px);
+        }
+
+        .share-link-container {
+            background-color: var(--apple-light-gray);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .share-link-container p {
+            margin-bottom: 10px;
+            color: var(--apple-medium-gray);
+        }
+
+        .link-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .link-input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background-color: white;
+        }
+
+        .copy-btn {
+            padding: 12px 20px;
+            background-color: var(--apple-orange);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #e6860a;
+        }
+
+        .load-record-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--apple-light-gray);
+            border-radius: 10px;
+        }
+
+        .load-record-btn {
+            padding: 10px 20px;
+            background-color: var(--apple-medium-gray);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .load-record-btn:hover {
+            background-color: #6a6a6f;
+        }
+
+        .load-record-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 600px) {
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-buttons button {
+                width: 200px;
+            }
+            
+            .link-input-group {
+                flex-direction: column;
+            }
+            
+            .link-input-group input,
+            .copy-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -625,6 +760,11 @@
             </section>
             
             <section class="calculator">
+                <div class="load-record-section" id="load-record-section" style="display: none;">
+                    <p>Previous record found</p>
+                    <button id="load-record-btn" class="load-record-btn">Load Previous Record</button>
+                </div>
+                
                 <div class="input-section">
                     <h3>Enter Your Birthdays to Unveil Your Cosmic Bond</h3>
                     <div class="date-inputs">
@@ -1472,6 +1612,20 @@
                     <h4>Relationship Advice</h4>
                     <p>${getLoveAdvice(totalScore, zodiac1, zodiac2)}</p>
                 </div>
+                
+                <div class="share-save-section">
+                    <div class="share-buttons">
+                        <button id="share-btn" class="share-btn">Share Result Link</button>
+                        <button id="save-record-btn" class="save-btn">Save This Record</button>
+                    </div>
+                    <div id="share-link-container" class="share-link-container" style="display: none;">
+                        <p>Copy the link below to share with others:</p>
+                        <div class="link-input-group">
+                            <input type="text" id="share-link" readonly />
+                            <button id="copy-link-btn" class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
             `;
             
             // 显示结果部分
@@ -1484,6 +1638,9 @@
                     createFiveElementsCharts(baziJson1, baziJson2);
                 }, 100);
             }
+            
+            // 绑定分享和保存功能的事件监听器
+            setupShareAndSaveEvents();
         }
         
         // 创建五行雷达图
@@ -1755,11 +1912,225 @@
             return `${specificAdvice}<br><br>For you (${translateZodiac(zodiac1)}): ${zodiacAdvice[zodiac1]}<br><br>For your partner (${translateZodiac(zodiac2)}): ${zodiacAdvice[zodiac2]}<br><br>✨ Love Treasure Box ✨<br>${generalAdvice[Math.floor(Math.random() * generalAdvice.length)]}`;
         }
 
+        // 分享和保存功能
+        function setupShareAndSaveEvents() {
+            const shareBtn = document.getElementById('share-btn');
+            const saveBtn = document.getElementById('save-record-btn');
+            const copyBtn = document.getElementById('copy-link-btn');
+            
+            if (shareBtn) {
+                shareBtn.addEventListener('click', generateShareLink);
+            }
+            
+            if (saveBtn) {
+                saveBtn.addEventListener('click', saveCurrentRecord);
+            }
+            
+            if (copyBtn) {
+                copyBtn.addEventListener('click', copyShareLink);
+            }
+        }
+
+        // 生成分享链接
+        function generateShareLink() {
+            const year1 = document.getElementById('year1').value;
+            const month1 = document.getElementById('month1').value;
+            const day1 = document.getElementById('day1').value;
+            const hour1 = document.getElementById('hour1').value;
+            
+            const year2 = document.getElementById('year2').value;
+            const month2 = document.getElementById('month2').value;
+            const day2 = document.getElementById('day2').value;
+            const hour2 = document.getElementById('hour2').value;
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            const params = new URLSearchParams({
+                y1: year1,
+                m1: month1,
+                d1: day1,
+                h1: hour1,
+                y2: year2,
+                m2: month2,
+                d2: day2,
+                h2: hour2
+            });
+            
+            const shareUrl = `${baseUrl}?${params.toString()}`;
+            
+            document.getElementById('share-link').value = shareUrl;
+            document.getElementById('share-link-container').style.display = 'block';
+        }
+
+        // 复制分享链接
+        function copyShareLink() {
+            const shareLink = document.getElementById('share-link');
+            shareLink.select();
+            shareLink.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                const copyBtn = document.getElementById('copy-link-btn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                copyBtn.style.backgroundColor = '#34c759';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.backgroundColor = '#ff9500';
+                }, 2000);
+            } catch (err) {
+                console.error('Copy failed:', err);
+                alert('Copy failed, please copy the link manually');
+            }
+        }
+
+        // 保存当前记录
+        function saveCurrentRecord() {
+            const record = {
+                year1: document.getElementById('year1').value,
+                month1: document.getElementById('month1').value,
+                day1: document.getElementById('day1').value,
+                hour1: document.getElementById('hour1').value,
+                year2: document.getElementById('year2').value,
+                month2: document.getElementById('month2').value,
+                day2: document.getElementById('day2').value,
+                hour2: document.getElementById('hour2').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                localStorage.setItem('loversMatchRecord', JSON.stringify(record));
+                
+                const saveBtn = document.getElementById('save-record-btn');
+                const originalText = saveBtn.textContent;
+                saveBtn.textContent = 'Saved!';
+                saveBtn.style.backgroundColor = '#2db84a';
+                
+                setTimeout(() => {
+                    saveBtn.textContent = originalText;
+                    saveBtn.style.backgroundColor = 'var(--apple-green)';
+                }, 2000);
+            } catch (err) {
+                console.error('Save failed:', err);
+                alert('Save failed, please check your browser settings');
+            }
+        }
+
+        // 读取保存的记录
+        function loadSavedRecord() {
+            try {
+                const savedRecord = localStorage.getItem('loversMatchRecord');
+                if (savedRecord) {
+                    const record = JSON.parse(savedRecord);
+                    
+                    document.getElementById('year1').value = record.year1;
+                    document.getElementById('month1').value = record.month1;
+                    document.getElementById('day1').value = record.day1;
+                    document.getElementById('hour1').value = record.hour1;
+                    
+                    document.getElementById('year2').value = record.year2;
+                    document.getElementById('month2').value = record.month2;
+                    document.getElementById('day2').value = record.day2;
+                    document.getElementById('hour2').value = record.hour2;
+                    
+                    // 更新日期选择器（因为月份变化会影响天数）
+                    updateDateSelectors();
+                    
+                    // 隐藏读取记录按钮
+                    document.getElementById('load-record-section').style.display = 'none';
+                    
+                    // 自动计算结果
+                    setTimeout(calculateCompatibility, 100);
+                }
+            } catch (err) {
+                console.error('Failed to load record:', err);
+            }
+        }
+
+        // 从URL参数恢复数据
+        function loadFromUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const params = {
+                y1: urlParams.get('y1'),
+                m1: urlParams.get('m1'),
+                d1: urlParams.get('d1'),
+                h1: urlParams.get('h1'),
+                y2: urlParams.get('y2'),
+                m2: urlParams.get('m2'),
+                d2: urlParams.get('d2'),
+                h2: urlParams.get('h2')
+            };
+            
+            // 检查是否所有参数都存在
+            const hasAllParams = Object.values(params).every(param => param !== null && param !== '');
+            
+            if (hasAllParams) {
+                // 等待页面完全加载后再设置值
+                setTimeout(() => {
+                    document.getElementById('year1').value = params.y1;
+                    document.getElementById('month1').value = params.m1;
+                    document.getElementById('day1').value = params.d1;
+                    document.getElementById('hour1').value = params.h1;
+                    
+                    document.getElementById('year2').value = params.y2;
+                    document.getElementById('month2').value = params.m2;
+                    document.getElementById('day2').value = params.d2;
+                    document.getElementById('hour2').value = params.h2;
+                    
+                    // 更新日期选择器
+                    updateDateSelectors();
+                    
+                    // 自动计算结果
+                    setTimeout(calculateCompatibility, 200);
+                }, 500);
+                
+                return true;
+            }
+            
+            return false;
+        }
+
+        // 更新日期选择器（用于确保日期有效性）
+        function updateDateSelectors() {
+            // 更新第一个人的日期
+            const month1 = parseInt(document.getElementById('month1').value);
+            const year1 = parseInt(document.getElementById('year1').value);
+            updateDayOptions('day1', year1, month1);
+            
+            // 更新第二个人的日期
+            const month2 = parseInt(document.getElementById('month2').value);
+            const year2 = parseInt(document.getElementById('year2').value);
+            updateDayOptions('day2', year2, month2);
+        }
+
+        // 检查是否有保存的记录
+        function checkSavedRecord() {
+            try {
+                const savedRecord = localStorage.getItem('loversMatchRecord');
+                if (savedRecord) {
+                    const record = JSON.parse(savedRecord);
+                    const loadSection = document.getElementById('load-record-section');
+                    loadSection.style.display = 'block';
+                    
+                    // 绑定读取记录按钮事件
+                    document.getElementById('load-record-btn').addEventListener('click', loadSavedRecord);
+                }
+            } catch (err) {
+                console.error('Failed to check saved record:', err);
+            }
+        }
+
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
             // 延迟初始化选择器，确保页面首先渲染
             setTimeout(() => {
                 initDateSelectors();
+                
+                // 检查URL参数，如果没有URL参数，则检查保存的记录
+                if (!loadFromUrlParams()) {
+                    checkSavedRecord();
+                }
             }, 10);
             
             document.getElementById('calculate-btn').addEventListener('click', calculateCompatibility);
